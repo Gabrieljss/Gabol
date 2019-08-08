@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<conio.h>
 void showTabu(char casas[8][8]){
 	//NESSA FUNCAO IREMOS MOSTRAR O TABULEIRO NO CONSOLE
 	printf("\t    A B C D E F G H\n");
@@ -23,12 +24,22 @@ void tabuleiro(){
 						{' ',i,' ',i,' ',i,' ',i},
 						{i,' ',i,' ',i,' ',i,' '},
 						{' ',i,' ',i,' ',i,' ',i},
-						{'P','P','P','P','P','P','P','P'},
-						{'T','H','B','Q','K','B','H','T'}};
+						{'p','p','p','p','p','p','p','p'},
+						{'t','h','b','q','k','b','h','t'}};
 		//NA LINHA ABAIXO ESTAMOS MOSTRANDO NOSSA MATRIZ
    showTabu(tabu);
 
 }
+
+/*void peao(int numeroDeJogadas, char piece, int jogador){
+	char coord[2];
+	if(numeroDeJogadas<2){
+		printf("O peao so pode movimentar uma casa pra frente e come nas diagonais. Selecione a coordenada do seu peao e onde quer movimenta-lo");
+		scanf("%s",&coord);
+		bool 
+		while()
+}
+}*/
 void rodarJogo(){
 	int emJogo = 1;
 	int jogador = 1;
@@ -39,25 +50,36 @@ void rodarJogo(){
 	NA TERCEIRA LINHA, CHAMAMOS O NOSSO TABULEIRO
 	NO WHILE ABAIXO, ENQUANTO O XADREZ ESTIVER EM JOGO(emJogo=1), IREMOS REALIZAR OS SEGUINTES COMANDOS:
 	*/
-	int numeroDeJogadas = 0;
+	int numeroDeJogadas = 0; 
 	char piece;
 	while(emJogo==1){
+			fflush(stdin);
 			printf("Vez do jogador: %d\n",jogador);
 			piece = ' ';
-			if(numeroDeJogadas <2){
 			printf("Escolha sua peca: ");
 			scanf("%c",&piece);	
-			if(piece!='P' && piece !='H'){
-				while(piece!='P'){
-				printf("So pode mover o pe�o(P) ou o cavalo(H)");
+			
+			if(numeroDeJogadas <2){
+				while(piece!='P' && piece!='H'){
+				fflush(stdin);
+				printf("So pode mover o peão(P) ou o cavalo(H)\n");
 				scanf("%c",&piece);
 			}
+		
+		}else{
+			while(piece!='P' && piece!='H'&& piece!='T'&& piece!='K'&& piece!='Q' && piece!='P'){
+			fflush(stdin);	
+			printf("So pode mover peões(P), cavalo(H), Bis") ;
 		}
+		
+		}
+	if(jogador==1){
+			jogador=2;
+		}else{
+			jogador=1;
+		}
+		numeroDeJogadas++;
 			}
-			
-	}
-	
-	
 }
 
 int main(){
