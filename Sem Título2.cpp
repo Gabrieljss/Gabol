@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include<conio.h>
 void showTabu(char casas[8][8]){
 	//NESSA FUNCAO IREMOS MOSTRAR O TABULEIRO NO CONSOLE
@@ -30,16 +31,69 @@ void tabuleiro(){
    showTabu(tabu);
 
 }
-
-/*void peao(int numeroDeJogadas, char piece, int jogador){
+void checarExistenciaDeCasa(char coord[2]){
+		 while(strcmp(coord,"A1")!=0 && strcmp(coord,"A7")!=0 && strcmp(coord,"B6")!=0 && strcmp(coord,"C4")!=0  && strcmp(coord,"D2")!=0 && strcmp(coord,"D7")!=0 && strcmp(coord,"E4")!=0 && strcmp(coord,"F1")!=0 && strcmp(coord,"F6")!=0 && strcmp(coord,"G3")!=0 && strcmp(coord,"G7")!=0 &&
+		       strcmp(coord,"A2")!=0 && strcmp(coord,"B2")!=0 && strcmp(coord,"B7")!=0 && strcmp(coord,"C5")!=0  && strcmp(coord,"D3")!=0 && strcmp(coord,"D8")!=0 && strcmp(coord,"E5")!=0 && strcmp(coord,"F2")!=0 && strcmp(coord,"F7")!=0 && strcmp(coord,"G4")!=0 && strcmp(coord,"G8")!=0 && 
+		       strcmp(coord,"A3")!=0 && strcmp(coord,"B3")!=0 && strcmp(coord,"B8")!=0 && strcmp(coord,"C6")!=0  && strcmp(coord,"D4")!=0 && strcmp(coord,"E1")!=0 && strcmp(coord,"E6")!=0 && strcmp(coord,"F3")!=0 && strcmp(coord,"F8")!=0 && strcmp(coord,"G5")!=0 && strcmp(coord,"H1")!=0 && 
+		       strcmp(coord,"A4")!=0 && strcmp(coord,"B4")!=0 && strcmp(coord,"C1")!=0 && strcmp(coord,"C7")!=0  && strcmp(coord,"D5")!=0 && strcmp(coord,"E2")!=0 && strcmp(coord,"E7")!=0 && strcmp(coord,"F4")!=0 && strcmp(coord,"G1")!=0 && strcmp(coord,"G6")!=0 && strcmp(coord,"H2")!=0 &&
+		       strcmp(coord,"A5")!=0 && strcmp(coord,"A8")!=0 && strcmp(coord,"C3")!=0 && strcmp(coord,"D1")!=0  && strcmp(coord,"D6")!=0 && strcmp(coord,"E3")!=0 && strcmp(coord,"E8")!=0 && strcmp(coord,"F5")!=0 && strcmp(coord,"G2")!=0 && strcmp(coord,"H3")!=0&& 
+			   strcmp(coord,"H4")!=0&& strcmp(coord,"H5")!=0 && strcmp(coord,"H6")!=0 && strcmp(coord,"H7")!=0 && strcmp(coord,"H8")!=0 && strcmp(coord,"A6")!=0 && strcmp(coord,"B1")!=0 && strcmp(coord,"B5")!=0 && strcmp(coord,"C2")!=0 && strcmp(coord,"C8")!=0){
+			   printf("Coordenada invalida");
+			   gets(coord);
+			   }
+}				
+void peao(int numeroDeJogadas, char piece, int jogador, char casas[8][8]){
 	char coord[2];
+	if(piece == 'P'||piece == 'p'){
 	if(numeroDeJogadas<2){
 		printf("O peao so pode movimentar uma casa pra frente e come nas diagonais. Selecione a coordenada do seu peao e onde quer movimenta-lo");
 		scanf("%s",&coord);
-		bool 
-		while()
+		checarExistenciaDeCasa(coord);
+		/*
+			FALTA VERIFICAR SE A CASA ESCOLHIDA EH UM PEAO
+		
+		
+		
+		*/
+		switch(coord[0]){
+			case 'A':
+				switch(coord[1]){
+					case'1':
+						if(jogador==1){
+						   if(casas[0][1])	
+						}
+						break;
+					case '2':
+						
+						break;
+					case '3':
+						
+						break;
+					case '4':
+						
+						break;
+					case'5':
+						
+						break;
+					case '6':
+						
+						break;
+					case'7':
+						
+						break;
+					case '8':
+						
+						break;
+					default:
+						printf("invalido");
+						break;				
+				}
+					
+				break;
+		}
+	}
+ }
 }
-}*/
 void rodarJogo(){
 	int emJogo = 1;
 	int jogador = 1;
@@ -55,14 +109,13 @@ void rodarJogo(){
 	while(emJogo==1){
 			fflush(stdin);
 			printf("Vez do jogador: %d\n",jogador);
-			piece = ' ';
 			printf("Escolha sua peca: ");
 			scanf("%c",&piece);	
 			
 			if(numeroDeJogadas <2){
 				while(piece!='P' && piece!='H'){
 				fflush(stdin);
-				printf("So pode mover o peão(P) ou o cavalo(H)\n");
+				printf("So pode mover o peao(P) ou o cavalo(H)\n");
 				scanf("%c",&piece);
 			}
 		
