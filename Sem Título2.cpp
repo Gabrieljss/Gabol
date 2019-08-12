@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<locale.h>
 #include<string.h>
 #include<conio.h>
 void showTabu(char casas[8][8]){
@@ -60,8 +61,8 @@ void peao(int numeroDeJogadas, char piece, int jogador, char casas[8][8]){
 				switch(coord[1]){
 					case'1':
 						if(jogador==1){
-						   if(casas[0][1])	
-						}
+						   //if(casas[0][1])	
+					//	}
 						break;
 					case '2':
 						
@@ -94,6 +95,7 @@ void peao(int numeroDeJogadas, char piece, int jogador, char casas[8][8]){
 	}
  }
 }
+}
 void rodarJogo(){
 	int emJogo = 1;
 	int jogador = 1;
@@ -107,9 +109,11 @@ void rodarJogo(){
 	int numeroDeJogadas = 0; 
 	char piece;
 	while(emJogo==1){
+		
+setlocale(LC_ALL, "portuguese");
 			fflush(stdin);
 			printf("Vez do jogador: %d\n",jogador);
-			printf("Escolha sua peca: ");
+			printf("Escolha sua peça: ");
 			scanf("%c",&piece);	
 			
 			if(numeroDeJogadas <2){
