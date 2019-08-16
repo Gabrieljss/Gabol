@@ -42,7 +42,11 @@ void checarExistenciaDeCasa(char coord[2]){
 			   printf("Coordenada invalida");
 			   gets(coord);
 			   }
-}				
+}	
+void movimento(char piece, char linha, char coluna, char casas[8][8]){
+	
+	
+}			
 void peao(int numeroDeJogadas, char piece, int jogador, char casas[8][8]){
 	char coord[2];
 	if(piece == 'P'||piece == 'p'){
@@ -56,13 +60,18 @@ void peao(int numeroDeJogadas, char piece, int jogador, char casas[8][8]){
 		
 		
 		*/
+		
+		
+		
+		/*
 		switch(coord[0]){
 			case 'A':
 				switch(coord[1]){
 					case'1':
 						if(jogador==1){
-						   //if(casas[0][1])	
-					//	}
+						   
+						
+						}
 						break;
 					case '2':
 						
@@ -91,7 +100,7 @@ void peao(int numeroDeJogadas, char piece, int jogador, char casas[8][8]){
 				}
 					
 				break;
-		}
+		}*/
 	}
  }
 }
