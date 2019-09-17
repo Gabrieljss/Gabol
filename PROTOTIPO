@@ -1,0 +1,196 @@
+void existenciaCoordenada(int colunaNum2, int linha2, int coluna2){
+	while(colunaNum2<0 && colunaNum2>7 && linha2<0 && linha2>7){
+		printf("Coordenada invalida!\n");
+			scanf("%c",&coluna2);
+				fflush(stdin);
+				
+				scanf("%d",&linha2);
+				fflush(stdin);
+				
+			
+
+				linha2 -= 1;
+				colunaNum2 = coluna2 - 65;
+	}
+}
+void checarCapturaPeao(int linha, int colunaNum, int jogador, int capturavel){
+	if(linha+1 =< 7 && colunaNum+1 =<7 && colunaNum-1 >=0 && linha-1>=0){
+		if(jogador ==1){
+			char pieces [6] = "pkqbth";
+			int tam = strlen(pieces);
+			for(int x = 0; x<tam;x++){
+				if(tabu[linha+1][colunaNum+1]==pieces[x]||tabu[linha+1][colunaNum-1]==pieces[x]||){
+					capturavel++:
+				}
+			}
+	}else{
+		char pieces [6] = "PKQBTH";
+			int tam = strlen(pieces);
+			for(int x = 0; x<tam;x++){
+				if(tabu[linha-1][colunaNum-1]==pieces[x]||tabu[linha-1][colunaNum+1]==pieces[x]||){
+					capturavel++:
+				}
+			}
+	}
+	 }
+   }
+}
+void peao(int numeroDeJogadas, int linha, int colunaNum){
+	int linha2,colunaNum2,capturavel=0;
+	char coluna2;
+	if(tabu[linha][colunaNum]=='P'||tabu[linha][colunaNum]=='p'){
+		if(jogador==1){
+			//CHECANDO SE É A PRIMEIRA JOGADA DE CADA PEAO
+		if(linha==1 && colunaNum>=0 && colunaNum<=7){	
+				printf("Esolha a casa que deseja migrar sua peça (Coluna depois Linha)");
+				scanf("%c",&coluna2);
+				fflush(stdin);
+				
+				scanf("%d",&linha2);
+				fflush(stdin);
+				existenciaCoordenada(colunaNum2,linha2,coluna2);				
+			    checarCapturaPeao(linha,colunaNum,jogador,capturavel);
+				linha2 -= 1;
+				colunaNum2 = coluna2 - 65;
+				//Verificando se a movimentação foi válida
+				if(linha2 - linha1==1){
+				//SE O PEÃO TENTOU CAPTURAR UMA PEÇA A SUA ESQUERDA
+					if(coluna-coluna2==1){	
+					 char pieces [6] = "pkqbth";
+					 int tam = strlen(pieces);
+					 for(int x = 0;x<tam;x++){
+							if(tabu[linha2][colunaNum2]!=pieces[x]){
+								capturavel++;		
+							}
+					 }
+					  if(capturavel==0){
+					  	while(coluna-coluna2==1){
+					  		printf("Movimentação inválida");
+					  		scanf("%c",&coluna2);
+							fflush(stdin);
+				
+							scanf("%d",&linha2);
+							fflush(stdin);
+							existenciaCoordenada(colunaNum2,linha2,coluna2);	
+							
+						  }	
+					  }
+					  //SE TENTAR CAPTURAR UMA PEÇA PELA DIREITA
+					}else if(coluna2-coluna==1){	
+					 char pieces [6] = "PKQBTH";
+					 int tam = strlen(pieces);
+					 for(int x = 0;x<tam;x++){
+							if(tabu[linha2][colunaNum2]!=pieces[x]){
+								capturavel++;		
+							}
+					 }
+					  if(capturavel==0){
+					  	while(coluna2-coluna==1){
+					  		printf("Movimentação inválida");
+					  		scanf("%c",&coluna2);
+							fflush(stdin);
+				
+							scanf("%d",&linha2);
+							fflush(stdin);
+							existenciaCoordenada(colunaNum2,linha2,coluna2);	
+							
+						  }	
+					  }
+					  //SE EXCEDER O NUMERO POSSIVEL 
+					} else {
+						/*
+						TERMINEI AQUI
+						
+						*/
+					}
+					
+					}
+					
+					
+			}
+		}
+	}
+}
+
+void moverPiece(char tabuleiro[8][8], int numeroDeJogadas,int jogador){
+	int colunaNum;
+	int linha;
+	char coluna, piece;
+	if(jogador==1){
+					printf("Suas peças são as que tao em maiúsculo\n");
+					printf ("Torre = T, Cavalo = H, Bispo = B, Rainha = Q, Rei = K, Peão = P\n");
+				}else{
+					printf("Suas peças são as que tao em minúsculo\n");
+					printf ("Torre = t, Cavalo = h, Bispo = b, Rainha = q, Rei = k, Peão = p\n");
+				}
+	if(numeroDeJogadas<2){
+				printf("Na primeira jogada, você só pode mover peão ou cavalo\n");
+				printf("Escolha a coordenada da sua peça: Coluna depois Linha\n");
+				
+				scanf("%c",&coluna);
+				fflush(stdin);
+				
+				scanf("%d",&linha);
+				fflush(stdin);
+				
+			
+				
+				linha -= 1;
+				colunaNum = coluna - 65;
+				
+				if(jogador==1){
+					while(tabuleiro[linha][colunaNum]!='P' && tabuleiro[linha][colunaNum]!='H'){
+						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você \n");
+						
+						scanf("%c",&coluna);
+						fflush(stdin);
+						
+						scanf("%d",&linha);
+						fflush(stdin);
+				
+						
+						linha -= 1;
+						colunaNum = coluna - 65;
+					}
+				}else{
+					while(tabuleiro[linha][colunaNum]!='p' && tabuleiro[linha][colunaNum]!='h'){
+						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você\n");
+						scanf("%c",&coluna);
+						fflush(stdin);
+						
+						scanf("%d",&linha);
+						fflush(stdin);
+				
+						
+						linha -= 1;
+						colunaNum = coluna - 65;
+					}
+				}
+			}
+			peao(tabu,colunaNum);
+}
+void rodarJogo(){
+	int emJogo = 1;
+	int jogador = 1;
+	showTabu(tabu);
+	/*
+	NA PRIMEIRA LINHA DA FUNCAO, ESTAMOS CRIANDO UMA VARIAVEL QUE IRA VERIFICAR SE O XADREZ ESTA EM JOGO (1: SIM, 0:NAO)
+	NA SEGUNDA LINHA, CRIAMOS UMA OUTRA VARIAVEl PARA DECIDIR A VEZ DO JOGADOR (1 OU 2)
+	NA TERCEIRA LINHA, CHAMAMOS O NOSSO TABULEIRO
+	NO WHILE ABAIXO, ENQUANTO O XADREZ ESTIVER EM JOGO(emJogo=1), IREMOS REALIZAR OS SEGUINTES COMANDOS DENTRO DELE
+	*/
+	int numeroDeJogadas = 0; 
+	char piece;
+	setlocale(LC_ALL, "portuguese");
+	while(emJogo==1){
+			fflush(stdin);
+			printf("Vez do jogador: %d\n",jogador);
+			moverPiece(tabu,numeroDeJogadas,jogador);
+	if(jogador==1){
+			jogador=2;
+		}else{
+			jogador=1;
+		}
+		numeroDeJogadas++;
+			}
+}
