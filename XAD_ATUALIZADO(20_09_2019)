@@ -7,6 +7,11 @@
 2- TESTAR AS MOVIMENTAÇÕES DO PEÃO
 3- FAZER FUNÇÃO PRA OUTRA PEÇA
 4- RESOLVER PROBLEMA DO ASCII TABLE
+5- CAVALO> 1LINHA:2COLUNAS OU 2COLUNAS:1LINHA/PULA PEÇAS
+6- BISPO> X LINHA:X COLUNA
+7- TORRE> X LINHA 0COLUNA OU X COLUNA 0LINHA
+8- RAINHA> BISPO+TORRE/NAO PULA
+9- REI> BISPO+TORRE/X=1
 */
 	//	int v = 254;
 	int v=0;
@@ -97,7 +102,8 @@ void digiteCasaMigrar(){
 void adicionarPiece(){
 	checarCasaVazia();
 	if(jogador==1){
-	if(tabu[linha2][colunaNum2]=='k'){
+		
+	/*if(tabu[linha2][colunaNum2]=='k'){
 		printf("Parabéns! O jogador 1, venceu o jogo!");
 		emJogo=0;
 	}
@@ -106,7 +112,8 @@ void adicionarPiece(){
 		printf("Parabéns! O jogador 2, venceu o jogo!");
 		emJogo=0;
 }
-}
+}*/
+
  	while(tabu[linha][colunaNum]==tabu[linha2][colunaNum2]){	
  		printf("Movimentação inválida!\n");
  		digiteCasaMigrar();
@@ -203,6 +210,7 @@ if(colunaNum2==colunaNum){
 		}else{
 			if(tabu[linha2][colunaNum2]==pieces2[x]) capturavel++;	
 			}
+			
 	}
  	if(capturavel==0){
 		while(colunaNum!=colunaNum2){
@@ -213,6 +221,7 @@ if(colunaNum2==colunaNum){
 		adicionarPiece();
 }else{
 	adicionarPiece();
+	capturavel = 0;
 }
 }
 }
@@ -220,10 +229,10 @@ if(colunaNum2==colunaNum){
 
 void moverPiece(char tabuleiro[8][8]){
 	           if(jogador==1){
-					printf("Suas peças são as que tao em maiúsculo\n");
+					printf("Suas peças são as que estão em maiúsculo\n");
 					printf ("Torre = T, Cavalo = H, Bispo = B, Rainha = Q, Rei = K, Peão = P\n");
 				}else{
-					printf("Suas peças são as que tao em minúsculo\n");
+					printf("Suas peças são as que estão em minúsculo\n");
 					printf ("Torre = t, Cavalo = h, Bispo = b, Rainha = q, Rei = k, Peão = p\n");
 				}
 				digiteCasaAtual();
