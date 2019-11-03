@@ -1,0 +1,50 @@
+void moverTorre(){
+	if(tabu[linha][colunaNum]=='T'||tabu[linha][colunaNum]=='t'){
+	int subtrL=linha2-linha;
+	int subtrC = colunaNum2 - colunaNum;
+	int vitima;int invalido;
+	// VERIFICAR SE APENAS LINHA OU COLUNA FOI ALTERADA
+	if(linha2==linha && colunaNum != colunaNum2){
+		
+		for(int i = linha; i<= linha2;i++){
+				if(tabu[i][colunaNum]!=' '){
+					printf("Movimentação inválida: Há uma peça no caminho!\n");
+					invalido = 1;
+					break;
+				}
+		}
+		if(invalido==1){
+		digitePecaAtual();
+	}else{
+	verificarPecasAoRedor(&vitima);
+	if(vitima==jogador){
+		printf("Movimentação inválida: Não pode capturar suas peças!\n");
+		digitePecaAtual();
+	}else{
+		adicionarPiece();
+	}
+	}
+	}else 	if(linha2!=linha && colunaNum == colunaNum2){
+		for(int j = colunaNum; i<= colunaNum2;i++){
+				if(tabu[i][j]!=' '){
+					printf("Movimentação inválida: Há uma peça no caminho!\n");
+					invalido = 1;
+					break;
+				}
+		}
+		if(invalido==1){
+		digitePecaAtual();
+	}else{
+	verificarPecasAoRedor(&vitima);
+	if(vitima==jogador){
+		printf("Movimentação inválida: Não pode capturar suas peças!\n");
+		digitePecaAtual();
+	}else{
+		adicionarPiece();
+	}
+	}
+}else{
+	printf("Movimentação inválida: Ou move linha ou move coluna!\n");
+	digitePecaAtual();
+}
+}
