@@ -1,0 +1,50 @@
+void moverRainha(){
+	if(tabu[linha][colunaNum]=='Q'||tabu[linha][colunaNum]=='q'){
+	int subtrL=linha2-linha,subtrC = colunaNum2 - colunaNum,vitima,invalido;
+//RAINHA PODE SE MOVER COMO A TORRE OU O BISPO
+	if(colunaNum2==colunNum&&linha!=linha2){
+	for(int j = linha; j<linha2; j++){
+		if(tabu[linha][j]!= ' '){
+			invalido =1;
+			printf("Movimentação inválida: Há uma peça no caminho!\n");
+			invalido = 1;
+			break;
+		}
+	}
+	
+}else if(colunaNum2==colunNum&&linha!=linha2){	
+	for(int i = linha; i<linha2; i++){
+		if(tabu[i][colunaNum]!= ' '){
+			invalido =1;
+			printf("Movimentação inválida: Há uma peça no caminho!\n");
+			invalido = 1;
+			break;
+		}
+	}
+	
+}else if(subtrL!= subtrC){
+		for(int i = linha; i<= linha2;i++){
+			for(int j = colunaNum; i<= colunaNum2;i++){
+				if(tabu[i][j]!=' '){
+					printf("Movimentação inválida: Há uma peça no caminho!\n");
+					invalido =1;
+					break;
+				}
+				if(invalido ==1) break;
+		}
+	}
+}
+if(invalido == 1){
+		digiteCasaAtual();
+	}else{
+	verificarPecasAoRedor(&vitima);
+	if(vitima==jogador){
+		printf("Movimentação inválida: Não pode capturar suas peças!\n");
+		digitePecaAtual();
+	}else{
+		adicionarPiece();
+	}
+	}
+}
+}
+
