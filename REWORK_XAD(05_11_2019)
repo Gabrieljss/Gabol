@@ -1,0 +1,319 @@
+#include<stdio.h>
+#include<locale.h>
+#include<string.h>
+#include<stdlib.h>
+/*
+1- PERMIRTIR JOGADOR MOVIMENTAR AS DEMAIS PEÇAS 
+2- TESTAR AS MOVIMENTAÇÕES DO PEÃO
+3- FAZER FUNÇÃO PRA OUTRA PEÇA
+4- RESOLVER PROBLEMA DO ASCII TABLE
+5- CAVALO> 1LINHA:2COLUNAS OU 2COLUNAS:1LINHA/PULA PEÇAS
+6- BISPO> X LINHA:X COLUNA
+7- TORRE> X LINHA 0COLUNA OU X COLUNA 0LINHA
+8- RAINHA> BISPO+TORRE/NAO PULA
+9- REI> BISPO+TORRE/X=1
+*/
+	//	int v = 254;
+	int v=0;
+		//MATRIZ QUE IRÁ REPRESENTAR NOSSO TABULEIRO
+		char tabu[8][8] = {{'T','H','B','Q','K','B','H','T'},
+                    	   {'P','P','P','P','P','P','P','P'},
+						   {' ',' ',' ',' ',' ',' ',' ',' '}, 
+						   {' ',' ',' ',' ',' ',' ',' ',' '},
+						   {' ',' ',' ',' ',' ',' ',' ',' '},
+						   {' ',' ',' ',' ',' ',' ',' ',' '},
+						   {'p','p','p','p','p','p','p','p'},
+						   {'t','h','b','q','k','b','h','t'}};
+	int linha,linha2,colunaNum,colunaNum2, emJogo = 1, jogador = 1,capturavel=0;
+	char colunaChar, pieces2[7] = "PKQBTH", pieces [7] = "pkqbth";
+	int tam = strlen(pieces);
+	//NESSA FUNCAO IREMOS MOSTRAR O TABULEIRO NO CONSOLE
+void showTabu(char casas[8][8]){
+	system("cls");
+	printf("\t    A B C D E F G H\n");
+    int indice = 0;
+	for(int i=0;i<8;i++){
+		indice++;
+		printf("\t %d |%c|%c|%c|%c|%c|%c|%c|%c|\n",indice,casas[i][0],casas[i][1],casas[i][2],casas[i][3],casas[i][4],casas[i][5],casas[i][6],casas[i][7]);
+	}
+	
+}
+   //NA FUNÇÃO ABAIXO IREMOS PEDIR AO JOGADOR QUE ESCREVA A PEÇA ESCOLHILDA PARA SE MOVIMENTAR	
+void digiteCasaAtual(){
+	    printf("Escolha a coordenada da sua peça: Coluna depois Linha\n");
+    	fflush(stdin);
+		scanf("%c",&colunaChar);
+		fflush(stdin);
+		scanf("%d",&linha);
+		fflush(stdin);
+		linha -= 1;
+		colunaNum = colunaChar - 65;
+	//NESSE WHILE, IREMOS VERIFICAR SE AS COORDENADAS ESCOLHIDAS EXISTEM
+		while((colunaNum<0 || colunaNum>7) || (linha<0 || linha>7)){
+		printf("Coordenada não existe\n");
+		 printf("Escolha a coordenada da sua peça: Coluna depois Linha\n");
+		fflush(stdin);
+		scanf("%c",&colunaChar);
+		fflush(stdin);
+		scanf("%d",&linha);
+		fflush(stdin);
+		linha -= 1;
+		/*SISTEMA DE COORD POR ASCII TABLE: AO ESCOLHER A COLUNA, O JOGADOR IRÁ ESCREVER UMA LETRA PARA REPRESENTÁ-LA. CADA LETRA, NA TABELA ASCII, TEM SEU RESPECTIVO NÚMERO.
+			A LETRA "A" É A PRIMEIRA LETRA DO ALFABETO E É REPRESENTADA PELO NÚMERO 65. ENTÃO PARA TRANSFORMAR ESSAS COLUNAS DE LETRAS EM NÚMEROS PARA MAPEAR A MATRIZ, NÓS SUBTRAIRMOS 
+			O NÚMERO REPRESENTATIVO DE CADA LETRA POR 65. 
+			EXEMPLO : COLUNA = A: NUM(A) = 65. 65-65 =0, ENTAO COLUNA É ZERO. COLUNA = B: NUM(B) = 66. 66-65 = 1, ENTAO COLUNA É 1 
+		*/
+		colunaNum = colunaChar - 65;
+		
+	}
+	for
+}
+	//NA FUNÇÃO ABAIXO IREMOS PEDIR AO JOGADOR QUE ESCREVA PARA ONDE DESEJA MIGRAR SUA PEÇA	
+void digiteCasaMigrar(){
+		printf("Esolha a casa que deseja migrar sua peça (Coluna depois Linha)\n");
+	    fflush(stdin);
+		scanf("%c",&colunaChar);
+		fflush(stdin);
+		scanf("%d",&linha2);
+		fflush(stdin);
+		linha2 -= 1;
+		//FIZEMOS A DIFERENÇA ABAIXO PARA CONVERTER O CHARACTER EM UMA COLUNA DA MATRIZ ( ASCII TABLE )
+		colunaNum2 = colunaChar - 65;
+		if(colunaChar=='o') printf("Coluna1: %d; Linha: %d; Coluna2: %d; Linha2 :%d",colunaNum,linha,colunaNum2,linha2);
+	//NESSE WHILE, IREMOS VERIFICAR SE AS COORDENADAS ESCOLHIDAS EXISTEM
+		while((colunaNum2<0 || colunaNum2>7) || (linha2<0 || linha2>7)){
+		printf("Coordenada não existe\n");
+		digiteCasaAtual();
+		printf("Esolha a casa que deseja migrar sua peça (Coluna depois Linha)\n");
+		fflush(stdin);
+		scanf("%c",&colunaChar);
+		fflush(stdin);
+		scanf("%d",&linha2);
+		fflush(stdin);
+		linha2 -= 1;
+		colunaNum2 = colunaChar - 65;
+	}
+}
+	//NA FUNÇÃO ABAIXO, VAMOS VERIFICAR SE A CASA ESCOLHIDA, PARA MOVIMENTAR A PEÇA, ESTÁ DISPONÍVEL
+     int checarCasaVazia(){
+     	//SE X FOR ZERO, CASA ESTA VAZIA, SENÃO, ESTÁ OCUPADA
+     	int x = 0;
+		if(tabu[linha2][colunaNum2]!=' '){
+		printf("Essa casa não está vazia!\n");
+		x=1;
+	}
+	return x;
+}
+   //NESSA FUNÇÃO, O CÓDIGO IRAR ADICIONAR A PEÇA, QUE VOCÊ ESCOLHER, NA CASA ESCOLHIDA
+void adicionarPiece(){
+ 	while(tabu[linha][colunaNum]==tabu[linha2][colunaNum2]){	
+ 		printf("Movimentação inválida!\n");
+ 		digiteCasaMigrar();
+ 		checarCasaVazia();
+	 }
+
+	tabu[linha2][colunaNum2]=tabu[linha][colunaNum];
+//	if(linha%2==0){
+//		tabu[linha][colunaNum]=' ';
+//	}else{
+//		tabu[linha][colunaNum]= 254;
+//	}
+	tabu[linha][colunaNum]=' ';
+	showTabu(tabu);
+//	*proximoJog = 1;
+}
+
+void verificarPecasAoRedor(int *vitima){
+	char pieces2[7] = "PKQBTH", pieces [7] = "pkqbth";
+	int tam = strlen(pieces);
+	*vitima=0;
+	for(int x = 0;x<tam;x++){
+		if(tabu[linha2][colunaNum2]==pieces[x]){
+			*vitima=1;
+		}else if(tabu[linha2][colunaNum2]==pieces2[x]){
+			*vitima=2;
+		}
+	}
+	
+	}
+void moverPeao(int *proximoJog){
+		int x;
+		if(tabu[linha][colunaNum]=='P'||tabu[linha][colunaNum]=='p'){
+			//CHECANDO SE É A PRIMEIRA JOGADA DE CADA PEAO (PODEMOS AFIRMAR QUE É O PRIMEIRO LANCE DO PEÃO DO JOGADOR 1, SE ELE ESTIVER LOCALIZADO EM QUALQUER POSIÇÃO DA LINHA 1)
+		digiteCasaMigrar();
+	//tentar refazer a movimentaçao geral para adaptar ao jogador 1 e 2
+		int subtrL=linha2-linha;
+	//SUBTRL: QUANTAS COLUNAS TENTOU MOVER (SUBTRC>0 => DIREITA; SUBTRL<0 => ESQUERDA
+	int subtrC = colunaNum2 - colunaNum;
+	int vitima;
+	//SE MOVER UMA COLUNA 
+	if(subtrC==1 || subtrC==-1){
+	verificarPecasAoRedor(&vitima);
+	if(vitima==0){
+		printf("Movientação inválida: Não há peças para capturar!\n");
+	}else{
+		//SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 1 
+		if(vitima==1){
+			if(jogador==1){
+				printf("Movientação inválida: Não pode capturar suas peças!\n");
+			}else{
+				//SE O PEÃO DO JOGADOR 2 TENTAR SUBIR MAIS DE UMA LINHA
+				if(subtrL!=-1){
+				printf("Movientação inválida: Seu peão so pode capturar peças que estão uma linha e uma coluna acima dele!\n");
+				//SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 1 E O JOGADOR 2 FIZER A MOVIMENTAÇÃO CORRETA
+				}else{
+					adicionarPiece();
+					*proximoJog = 1;
+				}
+			}
+			//SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 2
+		}else if(vitima==2){
+			if(jogador==2){
+				printf("Movientação inválida: Não pode capturar suas peças!\n");
+			}else{
+			//SE O PEÁO DO JOGADOR 1 TENTAR DESCER MAIS DE UMA LINHA
+				if(subtrL!=1){
+				printf("Movientação inválida: Seu peão so pode capturar peças uma linha e uma coluna abaixo dele!\n");
+				//SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 2 E O JOGADOR 1 FIZER A MOVIMENTAÇÃO CORRETA
+				}else{
+					adicionarPiece();
+					*proximoJog = 1;
+				}
+			}
+		}
+	}
+	//SE TENTAR MOVER MAIS DE UMA COLUNA
+	}else if(subtrC>1 || subtrC<-1){
+		printf("Movimentação inválida: O peão não movimenta mais do que uma coluna!\n");
+
+		//SE NÃO MOVER A COLUNA
+		}else if(subtrC==0){
+			//SE NÃO FIZER UMA MOVIMENTAÇÃO VÁLIDA
+		if(subtrL!=1 && subtrL!=2 && subtrL !=-1 && subtrL !=-2){
+			printf("Movimentação inválida: O peão so pode movimentar no máximo 2 linhas, quando pode! Em um sentido só [baixo(jogador1) ou cima(jogador2)]\n");
+			//SE FIZER MOVIMENTAÇÃO VÁLIDA
+		}else if(subtrL==2 || subtrL==1){
+				//SE O JOGADOR 2 TENTAR FAZER A MOVIMENTAÇÃO DO JOGADOR 1, OU SEJA MOVER PARA BAIXO.
+			if(jogador==2){
+				printf("Movimentação inválida: Seu peão so pode mover para cima!\n");
+			}else if(jogador==1){
+				//SE O JOGADOR 1 TENTAR DESCER 2 CASAS
+				if(subtrL == 2){
+				//SE NÃO FOR A PRIMEIRA JOGADA DO PEÃO (1). PARA SER A PRIMEIRA JOGADA DO PEAO (1), ELE DEVE ESTAR NA SEGUNDA LINHA:
+					if(linha!=1){
+						printf("Movimentação inválida: O peão pode andar 2 casas so na primeira jogada dele!\n");
+				//SE FOR A PREIMEIRA JOGADA DO PEÃO 1:
+					}else{
+						x = checarCasaVazia();
+						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						if(x==0){
+						adicionarPiece();
+						*proximoJog = 1;
+						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
+					   }else{
+					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   }
+				   }
+				//SE O JOGADOR 1 TENTAR DESCER 1 CASA
+				}else{
+						x = checarCasaVazia();
+						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						if(x==0){
+						adicionarPiece();
+						*proximoJog = 1;
+						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
+					   }else{
+					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   }
+				}
+			}
+			}else if(subtrL==-2 || subtrL ==-1){
+				//SE O JOGADOR 1 TENTAR FAZER A MOVIMENTAÇÃO DO JOGADOR 2
+				if(jogador==1){
+				printf("Movimentação inválida: Seu peão so pode mover para baixo!\n");
+				}else if(jogador==2){
+					//SE O JOGADOR 2 TENTAR SUBIR 2 CASAS
+					if(subtrL == -2){
+						//SE NÃO FOR A PRIMEIRA JOGADA DO PEÃO (2). PARA SER A PRIMEIRA JOGADA DO PEAO (2), ELE DEVE ESTAR NA SÉTIMA LINHA:
+					if(linha!=6){
+						printf("Movimentação inválida: O peão pode andar 2 casas so na primeira jogada dele!\n");
+					}else{
+						x = checarCasaVazia();
+						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						if(x==0){
+						adicionarPiece();
+						*proximoJog = 1;
+						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
+					   }else{
+					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   }
+					}
+				//SE O JOGADOR 2 TENTAR SUBIR 1 CASA
+				}else{
+					x = checarCasaVazia();
+						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						if(x==0){
+						adicionarPiece();
+						*proximoJog = 1;
+						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
+					   }else{
+					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   }
+					}
+				}
+			}	
+		
+		}
+	}
+}
+
+void moverPiece(char tabuleiro[8][8]){
+	int proximoJog=0;
+		showTabu(tabu);
+		printf("Vez do jogador: %d\n",jogador);	
+		if(jogador==1){
+					printf("Suas peças são as que estão em maiúsculo\n");
+					printf ("Torre = T, Cavalo = H, Bispo = B, Rainha = Q, Rei = K, Peão = P\n");
+				}else{
+					printf("Suas peças são as que estão em minúsculo\n");
+					printf ("Torre = t, Cavalo = h, Bispo = b, Rainha = q, Rei = k, Peão = p\n");
+				}
+	          while (proximoJog == 0){
+				digiteCasaAtual();
+				if(jogador==1){
+					while(tabuleiro[linha][colunaNum]!='P' && tabuleiro[linha][colunaNum]!='H'){
+						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você\n");
+						digiteCasaAtual();
+					}
+				}else{
+					while(tabuleiro[linha][colunaNum]!='p' && tabuleiro[linha][colunaNum]!='h'){
+						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você\n");
+						digiteCasaAtual();
+					}
+				}	
+		        moverPeao(&proximoJog);
+			}
+			}
+void rodarJogo(){
+		setlocale(LC_ALL, "portuguese");
+	/*
+	NA PRIMEIRA LINHA DA FUNÇO, ESTAMOS CRIANDO UMA VARIAVEL QUE IRA VERIFICAR SE O XADREZ ESTA EM JOGO (1: SIM, 0:NAO)
+	NA SEGUNDA LINHA, CRIAMOS UMA OUTRA VARIAVEl PARA DECIDIR A VEZ DO JOGADOR (1 OU 2)
+	NA TERCEIRA LINHA, CHAMAMOS O NOSSO TABULEIRO
+	NO WHILE ABAIXO, ENQUANTO O XADREZ ESTIVER EM JOGO(emJogo=1), IREMOS REALIZAR OS SEGUINTES COMANDOS DENTRO DELE
+	*/
+	char piece;
+	while(emJogo==1){
+			moverPiece(tabu);
+	if(jogador==1){
+			jogador=2;
+		}else{
+			jogador=1;
+		}
+			}
+}
+
+int main(){
+rodarJogo();
+return 0;
+}
