@@ -25,8 +25,7 @@
 						   {'p','p','p','p','p','p','p','p'},
 						   {'t','h','b','q','k','b','h','t'}};
 	int linha,linha2,colunaNum,colunaNum2, emJogo = 1, jogador = 1,capturavel=0;
-	char colunaChar, pieces2[7] = "PKQBTH", pieces [7] = "pkqbth";
-	int tam = strlen(pieces);
+	char colunaChar;
 	//NESSA FUNCAO IREMOS MOSTRAR O TABULEIRO NO CONSOLE
 void showTabu(char casas[8][8]){
 	system("cls");
@@ -64,9 +63,8 @@ void digiteCasaAtual(){
 			EXEMPLO : COLUNA = A: NUM(A) = 65. 65-65 =0, ENTAO COLUNA É ZERO. COLUNA = B: NUM(B) = 66. 66-65 = 1, ENTAO COLUNA É 1 
 		*/
 		colunaNum = colunaChar - 65;
-		
 	}
-	for
+
 }
 	//NA FUNÇÃO ABAIXO IREMOS PEDIR AO JOGADOR QUE ESCREVA PARA ONDE DESEJA MIGRAR SUA PEÇA	
 void digiteCasaMigrar(){
@@ -124,7 +122,7 @@ void adicionarPiece(){
 }
 
 void verificarPecasAoRedor(int *vitima){
-	char pieces2[7] = "PKQBTH", pieces [7] = "pkqbth";
+	char pieces[7] = "PKQBTH", pieces2 [7] = "pkqbth";
 	int tam = strlen(pieces);
 	*vitima=0;
 	for(int x = 0;x<tam;x++){
@@ -136,6 +134,7 @@ void verificarPecasAoRedor(int *vitima){
 	}
 	
 	}
+	
 void moverPeao(int *proximoJog){
 		int x;
 		if(tabu[linha][colunaNum]=='P'||tabu[linha][colunaNum]=='p'){
@@ -211,7 +210,7 @@ void moverPeao(int *proximoJog){
 						*proximoJog = 1;
 						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
 					   }else{
-					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   	printf("Movimentação inválida: Essa casa está ocupada!\n");
 					   }
 				   }
 				//SE O JOGADOR 1 TENTAR DESCER 1 CASA
@@ -223,7 +222,7 @@ void moverPeao(int *proximoJog){
 						*proximoJog = 1;
 						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
 					   }else{
-					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   	printf("Movimentação inválida: Essa casa está ocupada!\n");
 					   }
 				}
 			}
@@ -245,7 +244,7 @@ void moverPeao(int *proximoJog){
 						*proximoJog = 1;
 						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
 					   }else{
-					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   	printf("Movimentação inválida: Essa casa está ocupada!\n");
 					   }
 					}
 				//SE O JOGADOR 2 TENTAR SUBIR 1 CASA
@@ -257,7 +256,7 @@ void moverPeao(int *proximoJog){
 						*proximoJog = 1;
 						//SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
 					   }else{
-					   	printf("Movimentação inválida: Essa casa está ocupada!");
+					   	printf("Movimentação inválida: Essa casa está ocupada!\n");
 					   }
 					}
 				}
@@ -268,9 +267,11 @@ void moverPeao(int *proximoJog){
 }
 
 void moverPiece(char tabuleiro[8][8]){
+	int contador;
+	char pieces[7] = "PKQBTH", pieces2 [7] = "pkqbth";
 	int proximoJog=0;
 		showTabu(tabu);
-		printf("Vez do jogador: %d\n",jogador);	
+		printf("Vez do jogador: %d\n",jogador);
 		if(jogador==1){
 					printf("Suas peças são as que estão em maiúsculo\n");
 					printf ("Torre = T, Cavalo = H, Bispo = B, Rainha = Q, Rei = K, Peão = P\n");
@@ -278,22 +279,38 @@ void moverPiece(char tabuleiro[8][8]){
 					printf("Suas peças são as que estão em minúsculo\n");
 					printf ("Torre = t, Cavalo = h, Bispo = b, Rainha = q, Rei = k, Peão = p\n");
 				}
+				//SE PROXIMOJOG FOR 0, SIGNIFICA QUE O JOGADOR ATUAL AINDA NAO TERMINOU SUA JOGADA
 	          while (proximoJog == 0){
 				digiteCasaAtual();
-				if(jogador==1){
-					while(tabuleiro[linha][colunaNum]!='P' && tabuleiro[linha][colunaNum]!='H'){
-						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você\n");
-						digiteCasaAtual();
+				for(int i = 0; i<7;i++){
+			    	if(jogador==1){
+						if(tabu[linha][colunaNum]==pieces[i]){
+							contador++;
+						}
+					}else if(jogador==2){
+						if(tabu[linha][colunaNum]==pieces[i]){
+							contador++;
+						}
 					}
-				}else{
-					while(tabuleiro[linha][colunaNum]!='p' && tabuleiro[linha][colunaNum]!='h'){
-						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você\n");
-						digiteCasaAtual();
-					}
-				}	
-		        moverPeao(&proximoJog);
-			}
-			}
+				}
+				if(contador!=0){
+//				 if(jogador==1){
+//					while(tabuleiro[linha][colunaNum]!='P' && tabuleiro[linha][colunaNum]!='H'){
+//						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você\n");
+//						digiteCasaAtual();
+//					}
+//				 }else{
+//					while(tabuleiro[linha][colunaNum]!='p' && tabuleiro[linha][colunaNum]!='h'){
+//						printf("A coordenada escolhida não é peão nem cavalo ou essa peça nao pertence à você\n");
+//						digiteCasaAtual();
+//					}
+//				 }	
+		         moverPeao(&proximoJog);
+			    }else if(contador==0){
+				 printf("[Erro]: A casa escolhida não possui peças pertencentes à você!\n");
+			   }
+		    }
+		}
 void rodarJogo(){
 		setlocale(LC_ALL, "portuguese");
 	/*
