@@ -204,7 +204,7 @@ void moverPeao(int *proximoJog){
 				//SE FOR A PREIMEIRA JOGADA DO PEÃO 1:
 					}else{
 						x = checarCasaVazia();
-						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						//SE A CASA, A MIGRAR, ESTIVER VAZIA
 						if(x==0){
 						adicionarPiece();
 						*proximoJog = 1;
@@ -216,7 +216,7 @@ void moverPeao(int *proximoJog){
 				//SE O JOGADOR 1 TENTAR DESCER 1 CASA
 				}else{
 						x = checarCasaVazia();
-						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						//SE A CASA, A MIGRAR, ESTIVER VAZIA
 						if(x==0){
 						adicionarPiece();
 						*proximoJog = 1;
@@ -238,7 +238,7 @@ void moverPeao(int *proximoJog){
 						printf("Movimentação inválida: O peão pode andar 2 casas so na primeira jogada dele!\n");
 					}else{
 						x = checarCasaVazia();
-						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						//SE A CASA, A MIGRAR, ESTIVER VAZIA
 						if(x==0){
 						adicionarPiece();
 						*proximoJog = 1;
@@ -250,7 +250,7 @@ void moverPeao(int *proximoJog){
 				//SE O JOGADOR 2 TENTAR SUBIR 1 CASA
 				}else{
 					x = checarCasaVazia();
-						//SE A CASA, A MIGRAR, ESTIVER VÁZIA
+						//SE A CASA, A MIGRAR, ESTIVER VAZIA
 						if(x==0){
 						adicionarPiece();
 						*proximoJog = 1;
