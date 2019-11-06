@@ -134,7 +134,68 @@ void verificarPecasAoRedor(int *vitima){
 	}
 	
 	}
-	
+	void moverBispo(int *proximoJog){
+	if(tabu[linha][colunaNum]=='B'||tabu[linha][colunaNum]=='b'){
+	digiteCasaMigrar();
+	int subtrL= linha2-linha;
+	int subtrC = colunaNum2 - colunaNum;
+	int vitima;
+	// VERIFICAR SE O NUMERO DE LINHAS E COLUNAS MOVIMENTADAS SAO IGUAIS
+	if(abs(subtrL)!= abs(subtrC)){
+		printf("Movimentação inválida: O bispo so pode se mover pela diagonal\n");
+	}else{
+		int invalido;
+		int j = colunaNum;
+		int i = linha;
+		printf("linha: %d, coluna: %d\nlinha2:%d, coluna2:%d\n",linha,colunaNum,linha2,colunaNum2);
+		if(subtrL>0 && abs(subtrL)!=1){
+		while(i<linha2-1){
+			i++;
+			if(subtrC>0){
+				j++;
+			}else{
+				j--;
+			}
+			printf("i: %d, j: %d\n",i,j);
+				if(tabu[i][j]!=' '){
+					invalido = 1;
+					printf("Movimentação inválida: Há uma peça no caminho: %c!\n",tabu[i][j]);
+					break;
+				} 
+			}
+		}else if(subtrL<0 && abs(subtrL)!=1){
+			while(i>linha2){
+				i--;
+			if(subtrC>0){
+				if(j<colunaNum2){	
+				j++;
+			}
+			}else{
+				if(j>colunaNum2){	
+				j--;
+			}
+			}
+			printf("i: %d, j: %d\n",i,j);
+				if(tabu[i][j]!=' '){
+					invalido = 1;
+					printf("Movimentação inválida: Há uma peça no caminho %c! tabu[%d][%d]\n",tabu[i][j],i,j);
+					break;
+				} 
+	}
+}
+	if(invalido!=1){
+		verificarPecasAoRedor(&vitima);
+		if(vitima==jogador){
+			printf("Movimentação inválida: Não pode capturar suas peças!\n");
+		}else{
+			adicionarPiece();
+			*proximoJog=1;
+	   }
+	}
+}
+}
+}
+
 void moverPeao(int *proximoJog){
 		int x;
 		if(tabu[linha][colunaNum]=='P'||tabu[linha][colunaNum]=='p'){
@@ -267,7 +328,6 @@ void moverPeao(int *proximoJog){
 }
 
 void moverPiece(char tabuleiro[8][8]){
-	int contador;
 	char pieces[7] = "PKQBTH", pieces2 [7] = "pkqbth";
 	int proximoJog=0;
 		showTabu(tabu);
@@ -282,13 +342,14 @@ void moverPiece(char tabuleiro[8][8]){
 				//SE PROXIMOJOG FOR 0, SIGNIFICA QUE O JOGADOR ATUAL AINDA NAO TERMINOU SUA JOGADA
 	          while (proximoJog == 0){
 				digiteCasaAtual();
+			int	contador = 0;
 				for(int i = 0; i<7;i++){
 			    	if(jogador==1){
 						if(tabu[linha][colunaNum]==pieces[i]){
 							contador++;
 						}
 					}else if(jogador==2){
-						if(tabu[linha][colunaNum]==pieces[i]){
+						if(tabu[linha][colunaNum]==pieces2[i]){
 							contador++;
 						}
 					}
@@ -306,6 +367,7 @@ void moverPiece(char tabuleiro[8][8]){
 //					}
 //				 }	
 		         moverPeao(&proximoJog);
+		         moverBispo(&proximoJog);
 			    }else if(contador==0){
 				 printf("[Erro]: A casa escolhida não possui peças pertencentes à você!\n");
 			   }
