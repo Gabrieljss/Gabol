@@ -210,13 +210,14 @@ void moverRainha(int *proximoJog,int linha,int colunaNum,int jogador,char tabu[8
 	digiteCasaMigrar(&linha2,&colunaNum2,tabu);
 	int subtrL=linha2-linha;
 	int subtrC = colunaNum2 - colunaNum;
-	int vitima=1,invalido=0;
+	int vitima,invalido=0;
+	verificarPecasAoRedor(&vitima,linha2,colunaNum2,tabu);
 	// VERIFICAR SE APENAS A COLUNA FOI ALTERADA
 	if(linha2==linha && colunaNum != colunaNum2){
 		//SE DESLOCOU PRA DIREITA
 		if(subtrC>0){
 		for(int j = colunaNum; j<colunaNum2;j++){
-				if(tabuleiro(linha,j,0,' ',tabu)!=' ' && j!=colunaNum){
+				if(tabuleiro(linha,j,0,' ',tabu)!=' ' && j!=colunaNum2 && j!=colunaNum){
 					printf("Movimentação inválida: Há uma peça no caminho!\n ");
 					invalido = 1;
 					break;
@@ -225,22 +226,22 @@ void moverRainha(int *proximoJog,int linha,int colunaNum,int jogador,char tabu[8
 		//SE DESLOCOU PRA ESQUERDA
 	}else if(subtrC<0){
 		for(int j = colunaNum; j>colunaNum2;j--){
-			if(tabuleiro(linha,j,0,' ',tabu)!=' ' && j!=colunaNum){
+			if(tabuleiro(linha,j,0,' ',tabu)!=' ' && j!=colunaNum2 && j!=colunaNum){
 					printf("Movimentação inválida: Há uma peça no caminho!\n");
 					invalido = 1;
 					break;
 				}
 		}
 		}else if (subtrC==0){
-			
 		printf("Movimentação inválida!");
+		invalido =1;
 	}
 		// VERIFICAR SE APENAS A LINHA FOI ALTERADA
 	}else if(linha2!=linha && colunaNum == colunaNum2){
 		//VERIFICAR SE DESLOCOU PRA CIMA
 		if(subtrL>0){
 		for(int i = linha; i<linha2;i++){
-				if(tabuleiro(i,colunaNum,0,' ',tabu)!=' '&& i!=linha){
+				if(tabuleiro(i,colunaNum,0,' ',tabu)!=' '&& i!=linha2 && i!=linha){
 					printf("Movimentação inválida: Há uma peça no caminho!\n");
 					invalido = 1;
 					break;
@@ -249,7 +250,7 @@ void moverRainha(int *proximoJog,int linha,int colunaNum,int jogador,char tabu[8
 		//VERIFICAR SE DESLOCOU PRA BAIXOU
 	}else if(subtrL<0){
 		for(int i = linha; i>linha2;i--){
-				if(tabuleiro(i,colunaNum,0,' ',tabu)!=' ' && i!=linha){
+				if(tabuleiro(i,colunaNum,0,' ',tabu)!=' ' && i!=linha2 && i!=linha){
 					printf("Movimentação inválida: Há uma peça no caminho!\n ");
 					invalido = 1;
 					break;
@@ -300,22 +301,22 @@ void moverRainha(int *proximoJog,int linha,int colunaNum,int jogador,char tabu[8
 	printf("Movimentação inválida!\n");
 	invalido = 1;
 }
-			if(invalido == 1){
+			if(invalido != 1){
 			if(vitima != 0){
 				if(vitima==jogador){
-					printf("Movimentação inválida: Não pode capturar suas peças!\n");
-				}
-				}	
-			}else{
-					if(vitima!=jogador){
+					printf("Movimentação inválida: Não pode capturar suas peças!\n tabu = %c, jogador = %d, vitima = %d",tabuleiro(linha2,colunaNum2,0,' ',tabu),jogador,vitima);
+				}else{
 					adicionarPiece(linha,colunaNum,linha2,colunaNum2,tabu);
-					*proximoJog = 1;	
-        }else{
-        	printf("Movimentação inválida: Não pode capturar suas peças!\n");
-		}
+					*proximoJog = 1;
+				}
+				}else{
+					adicionarPiece(linha,colunaNum,linha2,colunaNum2,tabu);
+					*proximoJog = 1;
+				}	
+			}
 }
 }
-}
+
 void moverRei(int *proximoJog,int linha,int colunaNum,int jogador,char tabu[8][8]){
 	if(tabuleiro(linha,colunaNum,0,' ',tabu)=='K'||tabuleiro(linha,colunaNum,0,' ',tabu)=='k'){
 	int linha2,colunaNum2;
@@ -325,7 +326,7 @@ void moverRei(int *proximoJog,int linha,int colunaNum,int jogador,char tabu[8][8
 	int vitima, invalido=0;
 	
 	if(subtrC==1 || subtrC==-1 || subtrL==1 || subtrL==-1 || (subtrL==1 && subtrC==1) || (subtrC==-1 && subtrL==-1) || (subtrC==-1 && subtrL==1) || (subtrC==1 && subtrL==-1)){
-	verificarPecasAoRedor(&vitima,linha,colunaNum,tabu);
+	verificarPecasAoRedor(&vitima,linha2,colunaNum2,tabu);
 	if(vitima==0){
 		adicionarPiece(linha,colunaNum,linha2,colunaNum2,tabu);
 		*proximoJog = 1;
