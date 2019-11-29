@@ -677,7 +677,7 @@ void moverPiece(int *jogador, char tabu[8][8], int *emJogo) {
 }
 
 void rodarJogo() {
-  int emJogo = 1, jogador;
+  int emJogo = 1, jogador=1;
   /*
   NA PRIMEIRA LINHA DA FUNÇO, ESTAMOS CRIANDO UMA VARIAVEL QUE IRA VERIFICAR SE O XADREZ ESTA EM JOGO (1: SIM, 0:NAO)
   */
