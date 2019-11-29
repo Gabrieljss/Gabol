@@ -126,7 +126,7 @@ void adicionarPiece(int linha, int coluna, int linha2, int coluna2, char tabu[8]
 void verificarPecasAoRedor(int * vitima, int linha, int coluna, char tabu[8][8]) {
   char pieces[7] = "PKQBTH", pieces2[7] = "pkqbth";
   int tam = strlen(pieces);
-  * vitima = 0;
+  *vitima = 0;
   for (int x = 0; x < tam; x++) {
     if (tabuleiro(linha, coluna, 0, ' ', tabu) == pieces[x]) {
       * vitima = 1;
@@ -371,7 +371,9 @@ void moverTorre(int * proximoJog, int linha, int colunaNum, int jogador, char ta
     int subtrC = colunaNum2 - colunaNum;
     int vitima, invalido = 0;
     // VERIFICAR SE APENAS A COLUNA FOI ALTERADA
+     verificarPecasAoRedor( & vitima, linha2, colunaNum2, tabu);
     if (linha2 == linha && colunaNum != colunaNum2) {
+    	
       //SE DESLOCOU PRA DIREITA
       if (subtrC > 0) {
         for (int j = colunaNum; j < colunaNum2; j++) {
