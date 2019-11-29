@@ -37,29 +37,56 @@ void showTabu(char tabu[8][8]) {
   }
 }
 //NA FUNÇÃO ABAIXO IREMOS PEDIR AO JOGADOR QUE ESCREVA A PEÇA ESCOLHILDA PARA SE MOVIMENTAR	
-void digiteCasaAtual(int * plinha, int * pcolunaNum) {
+void digiteCasaAtual(int *plinha, int *pcolunaNum) {
   char colunaChar;
   int linha;
   printf("Escolha a coordenada da sua peça: Coluna depois Linha\n");
   fflush(stdin);
-  scanf("%c", & colunaChar);
+  scanf("%c", &colunaChar);
   fflush(stdin);
-  scanf("%d", & linha);
+  scanf("%d", &linha);
   fflush(stdin);
-  * plinha = linha - 1;
-  * pcolunaNum = colunaChar - 65;
+  if(linha<9||linha>0){
+  *plinha = linha - 1;
+  *pcolunaNum = colunaChar - 65;
   //NESSE WHILE, IREMOS VERIFICAR SE AS COORDENADAS ESCOLHIDAS EXISTE
-  if (( * pcolunaNum < 0 || * pcolunaNum > 7) || ( * plinha < 0 || * plinha > 7)) {
+  while ((*pcolunaNum < 0 || *pcolunaNum > 7) || ( *plinha < 0 || *plinha > 7)) {
     /*SISTEMA DE COORD POR ASCII TABLE: AO ESCOLHER A COLUNA, O JOGADOR IRÁ ESCREVER UMA LETRA PARA REPRESENTÁ-LA. CADA LETRA, NA TABELA ASCII, TEM SEU RESPECTIVO NÚMERO.
     	A LETRA "A" É A PRIMEIRA LETRA DO ALFABETO E É REPRESENTADA PELO NÚMERO 65. ENTÃO PARA TRANSFORMAR ESSAS COLUNAS DE LETRAS EM NÚMEROS PARA MAPEAR A MATRIZ, NÓS SUBTRAIRMOS 
     	O NÚMERO REPRESENTATIVO DE CADA LETRA POR 65. 
     	EXEMPLO : COLUNA = A: NUM(A) = 65. 65-65 =0, ENTAO COLUNA É ZERO. COLUNA = B: NUM(B) = 66. 66-65 = 1, ENTAO COLUNA É 1 
     */
-    printf("Coordenada não existe\n");
+  printf("Coordenada não existe\n");
+  printf("Escolha a coordenada da sua peça: Coluna depois Linha\n");
+  fflush(stdin);
+  scanf("%c", &colunaChar);
+  fflush(stdin);
+  scanf("%d", &linha);
+  fflush(stdin);
+  if(linha<9&&linha>0){
+  *plinha = linha - 1;
+  *pcolunaNum = colunaChar - 65;
   }
 }
+}else{
+	while(linha<9||linha>0){
+printf("Coordenada não existe\n");
+  printf("Escolha a coordenada da sua peça: Coluna depois Linha\n");
+  fflush(stdin);
+  scanf("%c", &colunaChar);
+  fflush(stdin);
+  scanf("%d", &linha);
+  fflush(stdin);
+  if(linha<9&&linha>0){
+  *plinha = linha - 1;
+  *pcolunaNum = colunaChar - 65;
+}
+}
+}
+}
+
 //NA FUNÇÃO ABAIXO IREMOS PEDIR AO JOGADOR QUE ESCREVA PARA ONDE DESEJA MIGRAR SUA PEÇA	
-void digiteCasaMigrar(int * plinha2, int * pcolunaNum2, char tabu[8][8]) {
+void digiteCasaMigrar(int *plinha2, int *pcolunaNum2, char tabu[8][8]) {
   char colunaChar;
   int linha2, linha, colunaNum;
   printf("Escolha a casa que deseja migrar sua peça (Coluna depois Linha)\n");
@@ -68,21 +95,20 @@ void digiteCasaMigrar(int * plinha2, int * pcolunaNum2, char tabu[8][8]) {
   fflush(stdin);
   scanf("%d", & linha2);
   fflush(stdin);
-  * plinha2 = linha2 - 1;
+  *plinha2 = linha2 - 1;
   //FIZEMOS A DIFERENÇA ABAIXO PARA CONVERTER O CHARACTER EM UMA COLUNA DA MATRIZ ( ASCII TABLE )
-  * pcolunaNum2 = colunaChar - 65;
+  *pcolunaNum2 = colunaChar - 65;
   //NESSE WHILE, IREMOS VERIFICAR SE AS COORDENADAS ESCOLHIDAS EXISTEM
-  if (( * pcolunaNum2 < 0 || * pcolunaNum2 > 7) || ( * plinha2 < 0 || * plinha2 > 7)) {
-    printf("Coordenada não existe\n");
-    printf("Escolha a coordenada da sua peça: Coluna depois Linha\n");
+  if (( *pcolunaNum2 < 0 || *pcolunaNum2 > 7) || ( *plinha2 < 0 || *plinha2 > 7)) {
     /*SISTEMA DE COORD POR ASCII TABLE: AO ESCOLHER A COLUNA, O JOGADOR IRÁ ESCREVER UMA LETRA PARA REPRESENTÁ-LA. CADA LETRA, NA TABELA ASCII, TEM SEU RESPECTIVO NÚMERO.
     	A LETRA "A" É A PRIMEIRA LETRA DO ALFABETO E É REPRESENTADA PELO NÚMERO 65. ENTÃO PARA TRANSFORMAR ESSAS COLUNAS DE LETRAS EM NÚMEROS PARA MAPEAR A MATRIZ, NÓS SUBTRAIRMOS 
     	O NÚMERO REPRESENTATIVO DE CADA LETRA POR 65. 
     	EXEMPLO : COLUNA = A: NUM(A) = 65. 65-65 =0, ENTAO COLUNA É ZERO. COLUNA = B: NUM(B) = 66. 66-65 = 1, ENTAO COLUNA É 1 
     */
+    printf("Coordenada não existe\n");
   }
-
 }
+
 //NA FUNÇÃO ABAIXO, VAMOS VERIFICAR SE A CASA ESCOLHIDA, PARA MOVIMENTAR A PEÇA, ESTÁ DISPONÍVEL
 int checarCasaVazia(int linha, int coluna, char tabu[8][8]) {
   //SE X FOR ZERO, CASA ESTA VAZIA, SENÃO, ESTÁ OCUPADA
@@ -108,13 +134,13 @@ void vitoria(char tabu[8][8], int jogador) {
 }
 
 //NESSA FUNÇÃO, O CÓDIGO IRA ADICIONAR A PEÇA, QUE VOCÊ ESCOLHER, NA CASA ESCOLHIDA
-void adicionarPiece(int linha, int coluna, int linha2, int coluna2, char tabu[8][8], int ** * emJogo, int jogador) {
+void adicionarPiece(int linha, int coluna, int linha2, int coluna2, char tabu[8][8], int ***emJogo, int jogador) {
   if (tabuleiro(linha2, coluna2, 0, ' ', tabu) == 'K' || tabuleiro(linha2, coluna2, 0, ' ', tabu) == 'k') {
     //ARMAZENANDO O A PEÇA NA NOVA CASA
     tabuleiro(linha2, coluna2, 1, tabuleiro(linha, coluna, 0, ' ', tabu), tabu);
     tabuleiro(linha, coluna, 1, ' ', tabu);
-    vitoria(tabu, jogador); **
-    * emJogo = 0;
+    vitoria(tabu, jogador); 
+    *** emJogo = 0;
   } else {
     tabuleiro(linha2, coluna2, 1, tabuleiro(linha, coluna, 0, ' ', tabu), tabu);
     tabuleiro(linha, coluna, 1, ' ', tabu);
@@ -123,21 +149,21 @@ void adicionarPiece(int linha, int coluna, int linha2, int coluna2, char tabu[8]
 
 }
 
-void verificarPecasAoRedor(int * vitima, int linha, int coluna, char tabu[8][8]) {
+void verificarPecasAoRedor(int *vitima, int linha, int coluna, char tabu[8][8]) {
   char pieces[7] = "PKQBTH", pieces2[7] = "pkqbth";
   int tam = strlen(pieces);
   *vitima = 0;
   for (int x = 0; x < tam; x++) {
     if (tabuleiro(linha, coluna, 0, ' ', tabu) == pieces[x]) {
-      * vitima = 1;
+      *vitima = 1;
     } else if (tabuleiro(linha, coluna, 0, ' ', tabu) == pieces2[x]) {
-      * vitima = 2;
+      *vitima = 2;
     }
   }
 
 }
 
-void moverBispo(int * proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int ** emJogo) {
+void moverBispo(int *proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int **emJogo) {
   if (tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'B' || tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'b') {
     int linha2, colunaNum2;
     digiteCasaMigrar( & linha2, & colunaNum2, tabu);
@@ -199,7 +225,7 @@ void moverBispo(int * proximoJog, int linha, int colunaNum, int jogador, char ta
         //CASO JOGADA MIGRE PRA UMA CASA DISPONÍVEL
         if (vitima != jogador) {
           adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-          * proximoJog = 1;
+          *proximoJog = 1;
 
         } else {
           //SE O JOGADOR TENTAR CAPTURAR SUA PRÓPRIA PEÇA
@@ -209,7 +235,7 @@ void moverBispo(int * proximoJog, int linha, int colunaNum, int jogador, char ta
     }
   }
 }
-void moverRainha(int * proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int ** emJogo) {
+void moverRainha(int *proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int **emJogo) {
   if (tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'Q' || tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'q') {
     int colunaNum2, linha2;
     digiteCasaMigrar( & linha2, & colunaNum2, tabu);
@@ -314,18 +340,18 @@ void moverRainha(int * proximoJog, int linha, int colunaNum, int jogador, char t
           //SE A CASA ESTIVER DISPONÍVEL PARA CAPTURAR
         } else {
           adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-          * proximoJog = 1;
+          *proximoJog = 1;
         }
         //SE A CASA ESTIVER LIVRE
       } else {
         adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-        * proximoJog = 1;
+         *proximoJog = 1;
       }
     }
   }
 }
 
-void moverRei(int * proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int ** emJogo) {
+void moverRei(int *proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int **emJogo) {
   if (tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'K' || tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'k') {
     int linha2, colunaNum2;
     digiteCasaMigrar( & linha2, & colunaNum2, tabu);
@@ -337,7 +363,7 @@ void moverRei(int * proximoJog, int linha, int colunaNum, int jogador, char tabu
       verificarPecasAoRedor( & vitima, linha2, colunaNum2, tabu);
       if (vitima == 0) {
         adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-        * proximoJog = 1;
+        *proximoJog = 1;
       } else {
         //SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 1 
         if (vitima == 1) {
@@ -345,7 +371,7 @@ void moverRei(int * proximoJog, int linha, int colunaNum, int jogador, char tabu
             printf("Movimentação inválida: Não pode capturar suas peças!\n");
           } else if (jogador == 2) {
             adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-            * proximoJog = 1;
+            *proximoJog = 1;
           }
           //SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 2
         } else if (vitima == 2) {
@@ -353,7 +379,7 @@ void moverRei(int * proximoJog, int linha, int colunaNum, int jogador, char tabu
             printf("Movientação inválida: Não pode capturar suas peças!\n");
           } else if (jogador == 1) {
             adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-            * proximoJog = 1;
+            *proximoJog = 1;
           }
         }
       }
@@ -363,7 +389,7 @@ void moverRei(int * proximoJog, int linha, int colunaNum, int jogador, char tabu
     }
   }
 }
-void moverTorre(int * proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int ** emJogo) {
+void moverTorre(int *proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int **emJogo) {
   if (tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'T' || tabuleiro(linha, colunaNum, 0, ' ', tabu) == 't') {
     int linha2, colunaNum2;
     digiteCasaMigrar( & linha2, & colunaNum2, tabu);
@@ -436,7 +462,7 @@ void moverTorre(int * proximoJog, int linha, int colunaNum, int jogador, char ta
       //SE A CASA ESTIVER DISPONÍVEL
       if (vitima != jogador) {
         adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-        * proximoJog = 1;
+        *proximoJog = 1;
         //SE O JOGADOR TENTAR SE CAPTURAR
       } else {
         printf("Movimentação inválida: Não pode capturar suas peças!\n");
@@ -444,7 +470,7 @@ void moverTorre(int * proximoJog, int linha, int colunaNum, int jogador, char ta
     }
   }
 }
-void moverCavalo(int * proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int ** emJogo) {
+void moverCavalo(int *proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int **emJogo) {
   if (tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'H' || tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'h') {
     int linha2, colunaNum2, vitima;
     digiteCasaMigrar( & linha2, & colunaNum2, tabu);
@@ -457,7 +483,7 @@ void moverCavalo(int * proximoJog, int linha, int colunaNum, int jogador, char t
         printf("Movimentação inválida: Não pode capturar suas peças\n");
       } else {
         adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-        * proximoJog = 1;
+        *proximoJog = 1;
       }
     } else {
       //SE HOUVER UMA JOGADA FORA DO PADRÃO
@@ -465,7 +491,7 @@ void moverCavalo(int * proximoJog, int linha, int colunaNum, int jogador, char t
     }
   }
 }
-void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int ** emJogo) {
+void moverPeao(int *proximoJog, int linha, int colunaNum, int jogador, char tabu[8][8], int **emJogo) {
   int x;
 
   if (tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'P' || tabuleiro(linha, colunaNum, 0, ' ', tabu) == 'p') {
@@ -494,7 +520,7 @@ void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tab
               //SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 1 E O JOGADOR 2 FIZER A MOVIMENTAÇÃO CORRETA
             } else {
               adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-              * proximoJog = 1;
+              *proximoJog = 1;
             }
           }
           //SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 2
@@ -508,7 +534,7 @@ void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tab
               //SE A PEÇA CAPTURÁVEL PERTENCER AO JOGADOR 2 E O JOGADOR 1 FIZER A MOVIMENTAÇÃO CORRETA
             } else {
               adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-              * proximoJog = 1;
+              *proximoJog = 1;
             }
           }
         }
@@ -539,7 +565,7 @@ void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tab
               //SE A CASA, A MIGRAR, ESTIVER VAZIA
               if (x == 0) {
                 adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-                * proximoJog = 1;
+                *proximoJog = 1;
                 //SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
               } else {
                 printf("Movimentação inválida: Essa casa está ocupada!\n");
@@ -551,7 +577,7 @@ void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tab
             //SE A CASA, A MIGRAR, ESTIVER VAZIA
             if (x == 0) {
               adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-              * proximoJog = 1;
+              *proximoJog = 1;
               //SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
             } else {
               printf("Movimentação inválida: Essa casa está ocupada!\n");
@@ -574,7 +600,7 @@ void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tab
               //SE A CASA, A MIGRAR, ESTIVER VAZIA
               if (x == 0) {
                 adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-                * proximoJog = 1;
+                *proximoJog = 1;
                 //SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
               } else {
                 printf("Movimentação inválida: Essa casa está ocupada!\n");
@@ -586,7 +612,7 @@ void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tab
             //SE A CASA, A MIGRAR, ESTIVER VAZIA
             if (x == 0) {
               adicionarPiece(linha, colunaNum, linha2, colunaNum2, tabu, & emJogo, jogador);
-              * proximoJog = 1;
+              *proximoJog = 1;
               //SE A CASA, A MIGRAR, ESTIVER OCUPADA. E SE NÃO FOR UMA JOGADA VÁLIDA DE CAPTURA
             } else {
               printf("Movimentação inválida: Essa casa está ocupada!\n");
@@ -600,14 +626,14 @@ void moverPeao(int * proximoJog, int linha, int colunaNum, int jogador, char tab
   }
 }
 
-void moverPiece(int * jogador, char tabu[8][8], int * emJogo) {
+void moverPiece(int *jogador, char tabu[8][8], int *emJogo) {
   char pieces[7] = "PKQBTH", pieces2[7] = "pkqbth";
   int linha, colunaNum;
   int proximoJog = 0;
   showTabu(tabu);
   setlocale(LC_ALL, "portuguese");
-  printf("Vez do jogador: %d\n", * jogador);
-  if ( * jogador == 1) {
+  printf("Vez do jogador: %d\n", *jogador);
+  if (*jogador == 1) {
     printf("Suas peças são as que estão em MAIÚSCULO\n");
     printf("Torre = T, Cavalo = H, Bispo = B, Rainha = Q, Rei = K, Peão = P\n");
   } else {
@@ -617,29 +643,29 @@ void moverPiece(int * jogador, char tabu[8][8], int * emJogo) {
   //SE PROXIMOJOG FOR 0, SIGNIFICA QUE O JOGADOR ATUAL AINDA NAO TERMINOU SUA JOGADA
   while (proximoJog == 0) {
 
-    digiteCasaAtual( & linha, & colunaNum);
+    digiteCasaAtual( &linha, &colunaNum);
     //SE A CASA ESCOLHIDA FOR DO JOGADOR 1
     if (isupper(tabuleiro(linha, colunaNum, 0, ' ', tabu))) {
-      if ( * jogador == 1) {
-        moverPeao( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverBispo( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverTorre( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverRainha( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverRei( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverCavalo( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
+      if (*jogador == 1) {
+        moverPeao( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverBispo( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverTorre( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverRainha( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverRei( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverCavalo( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
 
-      } else if ( * jogador == 2) {
+      } else if ( *jogador == 2) {
         printf("[Erro]: A casa escolhida não possui peças pertencentes à você!\n");
       }
       //SE A CASA ESCOLHIDA FOR DO JOGADOR 2
     } else if (islower(tabuleiro(linha, colunaNum, 0, ' ', tabu))) {
       if ( * jogador == 2) {
-        moverPeao( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverBispo( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverTorre( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverRainha( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverRei( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
-        moverCavalo( & proximoJog, linha, colunaNum, * jogador, tabu, & emJogo);
+        moverPeao( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverBispo( & proximoJog, linha, colunaNum,*jogador, tabu, &emJogo);
+        moverTorre( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverRainha( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
+        moverRei( & proximoJog, linha, colunaNum,*jogador, tabu, &emJogo);
+        moverCavalo( & proximoJog, linha, colunaNum, *jogador, tabu, &emJogo);
       } else if ( * jogador == 1) {
         printf("[Erro]: A casa escolhida não possui peças pertencentes à você!\n");
       }
@@ -665,7 +691,7 @@ void rodarJogo() {
 						   {'t','h','b','q','k','b','h','t'}};
   //	NO WHILE ABAIXO, ENQUANTO O XADREZ ESTIVER EM JOGO(emJogo=1), IREMOS REALIZAR OS SEGUINTES COMANDOS DENTRO DELE
   while (emJogo == 1) {
-    moverPiece( & jogador, tabu, & emJogo);
+    moverPiece(&jogador, tabu, &emJogo);
     if (jogador == 1) {
       jogador = 2;
     } else {
